@@ -38,7 +38,7 @@
         <div id="mainContainer">
             <div id="canvasContainer">
                 <canvas id="imageArea"></canvas>
-                <canvas id="reference"> </canvas>
+                <canvas id="reference"></canvas>
             </div>
 
             
@@ -100,21 +100,25 @@
                 is usually more bright than red and blue, so it is taken into
                 account in the formula. So, by storing the object inside the 
                 array, we can access the values inside the array. So, we have
-                the values of all the pixels, now how do we make the imge into another
-                image? To do this we need to sort the image that we want to change, 
+                the values of all the pixels, now how do we make the image into another
+                image? To do this we need to sort both images' arrays, 
                 so that the array is sorted by grayscale, lowest to highest. 
             </p>
 
             <p id="actualText3"> 
-
+                Now that both images' arrays have been sorted we want to take every
+                index in the reference image's array (every object), and give its
+                x and y value to the cooresponding index on the image you want 
+                to change. This algorithm is how I was able to make an image look
+                like another image. 
             </p>
 
-            <p id="actualText4">
-
-            </p>
 
             <img id="image1" src="testImages/Screenshot 2026-08-21 224809.png" alt="imagelol"/>
 
+            <img id="image2" src="testImages/images (1).jpg" alt="another image lol"/>
+
+            <img id="image3" src="testImages/Screenshot 2026-08-22 203219.png" alt="another nother image lol"/>
         </div>
 
     </div>

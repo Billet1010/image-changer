@@ -837,7 +837,6 @@
             left: 7.5%;
             text-align: left;
             font-size: 0.4rem;
-            border: 2px solid black;
         }
         #actualText2{
             position: absolute;
@@ -849,7 +848,6 @@
             left: 57.5%;
             text-align: left;
             font-size: 0.4rem;
-            border: 2px solid black;
         }
 
         #actualText3{
@@ -862,20 +860,6 @@
             left: 7.5%;
             text-align: left;
             font-size: 0.4rem;
-            border: 2px solid black;
-        }
-
-        #actualText4{
-            position: absolute;
-            margin: 0;
-            padding: 0;
-            width: 35%;
-            height: 100%;
-            top: 335%;
-            left: 57.5%;
-            text-align: left;
-            font-size: 0.4rem;
-            border: 2px solid black;
         }
 
         #image1{
@@ -885,6 +869,30 @@
             width: 35%;
             height: 60%;
             top: 55%;
+            left: 57.5%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        #image2{
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            width: 35%;
+            height: 60%;
+            top: 155%;
+            left: 7.5%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        #image3{
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            width: 35%;
+            height: 60%;
+            top: 255%;
             left: 57.5%;
             background-size: cover;
             background-position: center;

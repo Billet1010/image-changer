@@ -1,6 +1,9 @@
 // program to change an image to look like anothher image
 
 
+// all elements
+// end of all elements
+
 
 // start of actual alorithm
 import square from "./square.js";
@@ -269,7 +272,7 @@ function setupDropzone(element, preview, wordsInside, cancel, hidden) {
 
         if (!file) return;
 
-        if (file.type.startsWith('image/')) {
+        if (file.type.startsWith('image/') && file.name.toLowerCase().endsWith('.heic') && file.name.toLowerCase().endsWith('.heif')) {
             const reader = new FileReader();
 
             reader.onload = (event) => {
@@ -287,7 +290,7 @@ function setupDropzone(element, preview, wordsInside, cancel, hidden) {
 
             reader.readAsDataURL(file);
         } else {
-            console.log('Not an image file:', file.type);
+            hidden.value = '';
         }
     });
 }
@@ -301,7 +304,11 @@ function setupForClick(clickableElement, hiddenInput, preview, wordsInside, canc
 
     hiddenInput.addEventListener('change', () => {
         const file = hiddenInput.files[0];
-        if (!file || !file.type.startsWith('image/')) return;
+        if (!file || !file.type.startsWith('image/') || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')) {
+            hiddenInput.value = '';
+            alert('please enter a image file that is not a heic or heif');
+            return; 
+        }
 
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -410,6 +417,29 @@ cancellation1.addEventListener('click', () => {
 cancellation2.addEventListener('click', () => {
     removeToOrginalInputState(cancellation2, file2, wordsInside2, backgroundElement, backgroundURL, preview2, imageInput2);
 });
+
+// pulse for mouse over file 1 and file 2 dropper
+file1.addEventListener('mouseover', () =>{
+    mouseOverMethod(file1);
+});
+file1.addEventListener('mouseleave', () => {
+    mouseRemovePulse(file1);
+});
+file2.addEventListener('mouseover', () =>{
+    mouseOverMethod(file2);
+});
+file2.addEventListener('mouseleave', () => {
+    mouseRemovePulse(file2);
+});
+
+function mouseOverMethod(element){
+    element.classList.add('pulse');
+}
+function mouseRemovePulse(element){
+    element.classList.remove('pulse');
+}
+
+// end of above comment
 
 
 
