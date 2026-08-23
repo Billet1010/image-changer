@@ -1,6 +1,9 @@
 // program to change an image to look like anothher image
 
 
+// all elements
+// end of all elements
+
 
 // start of actual alorithm
 import square from "./square.js";
@@ -269,7 +272,7 @@ function setupDropzone(element, preview, wordsInside, cancel, hidden) {
 
         if (!file) return;
 
-        if (file.type.startsWith('image/')) {
+        if (file.type.startsWith('image/') && file.name.toLowerCase().endsWith('.heic') && file.name.toLowerCase().endsWith('.heif')) {
             const reader = new FileReader();
 
             reader.onload = (event) => {
@@ -287,7 +290,7 @@ function setupDropzone(element, preview, wordsInside, cancel, hidden) {
 
             reader.readAsDataURL(file);
         } else {
-            console.log('Not an image file:', file.type);
+            hidden.value = '';
         }
     });
 }
@@ -301,7 +304,11 @@ function setupForClick(clickableElement, hiddenInput, preview, wordsInside, canc
 
     hiddenInput.addEventListener('change', () => {
         const file = hiddenInput.files[0];
-        if (!file || !file.type.startsWith('image/')) return;
+        if (!file || !file.type.startsWith('image/') || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')) {
+            hiddenInput.value = '';
+            alert('please enter a image file that is not a heic or heif');
+            return; 
+        }
 
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -352,7 +359,6 @@ function previewImages(element, arr1, arr2, preview, wordsInside){
             preview.style.backgroundImage = `url(${arr1[i]})`;
             preview.classList.add('showImage');
             wordsInside.innerHTML = 'PREVIEW';
-            
         }
         if (element == file1){
             referenceImageFile = arr1[i];
@@ -410,6 +416,29 @@ cancellation1.addEventListener('click', () => {
 cancellation2.addEventListener('click', () => {
     removeToOrginalInputState(cancellation2, file2, wordsInside2, backgroundElement, backgroundURL, preview2, imageInput2);
 });
+
+// pulse for mouse over file 1 and file 2 dropper
+file1.addEventListener('mouseover', () =>{
+    mouseOverMethod(file1);
+});
+file1.addEventListener('mouseleave', () => {
+    mouseRemovePulse(file1);
+});
+file2.addEventListener('mouseover', () =>{
+    mouseOverMethod(file2);
+});
+file2.addEventListener('mouseleave', () => {
+    mouseRemovePulse(file2);
+});
+
+function mouseOverMethod(element){
+    element.classList.add('pulse');
+}
+function mouseRemovePulse(element){
+    element.classList.remove('pulse');
+}
+
+// end of above comment
 
 
 
@@ -557,29 +586,39 @@ choices.classList.add('move');
 name.addEventListener('focus', changeInputTitleText);
 name.addEventListener('blur', nameChange);
 
-function nameChange(){
-
-    placeHolderText.classList.remove('nameInput');
-    placeHolderText.style.zIndex = '200';
-    placeHolderText.style.fontSize = '1em';
-    placeHolderText.style.height = '100%';
-    placeHolderText.style.width = '60%';
-    placeHolderText.style.opacity = "0.5";
-
-}
-
 function changeInputTitleText(){
-
-    placeHolderText.classList.add('nameInput');
     placeHolderText.style.zIndex = '400';
-    placeHolderText.style.fontSize = '0.5em';
-    placeHolderText.style.height = '5%';
-    placeHolderText.style.width = '30%';
+    placeHolderText.style.fontSize = '0.4rem';
+    placeHolderText.style.height = '10%';
+    placeHolderText.style.width = '5%';
     placeHolderText.style.opacity = "1";
-    console.log('hi');
-
+    placeHolderText.style.top = '37%';
+    placeHolderText.style.textAlign = 'center';
+    placeHolderText.style.left = '37.5%';
+    placeHolderText.style.color = '#333333';
+    name.style.borderColor = '#333333';
+    placeHolderText.style.alignItems = 'flex-end';
 }
 
+function nameChange(){
+    if(name.value == ''){
+        placeHolderText.style.zIndex = '200';
+        placeHolderText.style.height = '10%';
+        placeHolderText.style.width = '30%';
+        placeHolderText.style.opacity = "0.5";
+        placeHolderText.style.textAlign = 'left';
+        // reset back to original centered position
+        placeHolderText.style.top = '45%';
+        placeHolderText.style.left = '50%';
+        placeHolderText.style.color = 'white';
+        name.style.borderColor = 'white';
+        placeHolderText.style.alignItems = 'center';
+        
+        placeHolderText.style.fontSize = '1rem';
+    }
+}
+
+welcomeTitle.style.display = 'none';
 
 function handleEnterKey(e){
     if(e.key === 'Enter'){
@@ -589,8 +628,8 @@ function handleEnterKey(e){
         nextPaint(() => {
             startingScreen.classList.add('moveTitleScreen');
             choices.classList.remove('move');
+            welcomeTitle.style.display = 'inline-block';
             welcomeTitle.innerHTML = 'Welcome, ' + name.value;
-            welcomeTitle.style.left = '15%';
             welcomeTitle.style.width = '70%';
             name.style.display = 'none';
             placeHolderText.style.display = 'none';
