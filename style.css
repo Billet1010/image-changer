@@ -175,6 +175,7 @@
             width:100%;
             z-index: 9999;
             margin: 0;
+            font-size: 5rem;
 
         }
         #cancel2{
@@ -188,7 +189,7 @@
             width:100%;
             z-index:9999;
             margin:0;
-
+            font-size:5rem;
 
         }
 

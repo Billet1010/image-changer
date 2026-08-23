@@ -17,18 +17,16 @@ export const html = `
 
             <p id="welcomeTitle"> Welcome,</p>
 
-            <div id="textInput">
-            <input type="text" id="name"/>
-            <span id="placeHolderText">Name</span>
-            </div>
+                <input type="text" id="name"/>
+                <span id="placeHolderText"> Name </span>
             
         </div>
 
         <div id="choices" hidden>
 
-            <button id="work"> Work </button>
+            <button id="work"> Program </button>
 
-            <button id="anotherPage"> How It Work </button>
+            <button id="anotherPage"> How It Works </button>
 
             <button id="code"> Code </button>
 
@@ -41,7 +39,7 @@ export const html = `
         <div id="mainContainer">
             <div id="canvasContainer">
                 <canvas id="imageArea"></canvas>
-                <canvas id="reference"> </canvas>
+                <canvas id="reference"></canvas>
             </div>
 
             
@@ -79,13 +77,49 @@ export const html = `
     <div id="howItWork">
 
         <div id="justabackground">
-            <p id="text"> 
-                Two images are uploaded by the user — a source image, from which the colors are drawn, and a reference image, from which the target shape is derived. Both images are displayed on the screen, and the color of every single point in each image is read and recorded. Each point is then treated as its own small unit, for which its position and color are stored, and from which a brightness value is calculated using the formula 0.299 * red + 0.587 * green + 0.114 * blue, where red, green, and blue each represent how much of that color is present at that point. This particular formula is used instead of a simple average because it reflects how a human eye actually perceives light and dark — green is naturally seen as far brighter than red or blue at the same intensity, so it is weighted much more heavily in the calculation. Once every point in both images has been measured this way, the points from each image are ordered from darkest to lightest, producing a ranked list of colors from the source image and a ranked list of positions from the reference image.
+            
+            <p id="textTitle">How the algorithm works</p>
 
-These two ranked lists are then matched up according to their shared order: the color that was ranked, say, the hundredth-darkest in the source image is reassigned to wherever the hundredth-darkest point was located in the reference image. In this way, the palette of colors from the source image is reshaped to follow the light-and-dark pattern of the reference image — the darkest areas of the reference are filled in with the darkest available source colors, and the lightest areas are filled in with the lightest. For each point, the distance it needs to travel from its starting position to its new position is calculated and broken into many small, even steps, so that the transformation can unfold gradually rather than happening all at once.
-
-This gradual transformation is then animated on screen, with every point being nudged a small amount toward its new position, frame by frame, until it settles into place. While this is happening, a loading bar fills up in step with the progress, giving the user a clear sense that the transformation is underway. Once every point has reached its destination, the image is left fully rearranged — still made up of the source image's original colors, but now shaped according to the reference image's pattern of light and dark — and the final result can then be saved as an image file to the user's device.
+            <p id="actualText1"> 
+                To change an image to look like another image,
+                 one must have two images. A reference image, the 
+                 image that is not changed, and an image, the image
+                 that is changed. To change the image to look like another
+                 image, we must store the data through some means. 
+                 This algorithm is run completely on local javascript, meaning
+                 all the calculations are done on your computer in real time.
+                 When you input an image in, and click on the "start load process" button,
+                all the image data is saved in a javascript object. That means
+                every pixel has its x, y, rgba, and grayscale saved.
+                
             </p>
+
+            <p id="actualText2">
+                Grayscale is a scalar that holds, in this case, the pixel
+                data of its luminosity and brightness. Grayscale can be calculated
+                with (grayscale = 0.299 * r + 0.587 * g + 0.114 * b). Green
+                is usually more bright than red and blue, so it is taken into
+                account in the formula. So, by storing the object inside the 
+                array, we can access the values inside the array. So, we have
+                the values of all the pixels, now how do we make the image into another
+                image? To do this we need to sort both images' arrays, 
+                so that the array is sorted by grayscale, lowest to highest. 
+            </p>
+
+            <p id="actualText3"> 
+                Now that both images' arrays have been sorted we want to take every
+                index in the reference image's array (every object), and give its
+                x and y value to the cooresponding index on the image you want 
+                to change. This algorithm is how I was able to make an image look
+                like another image. 
+            </p>
+
+
+            <img id="image1" src="testImages/Screenshot 2026-08-21 224809.png" alt="imagelol"/>
+
+            <img id="image2" src="testImages/images (1).jpg" alt="another image lol"/>
+
+            <img id="image3" src="testImages/Screenshot 2026-08-22 203219.png" alt="another nother image lol"/>
         </div>
 
     </div>
@@ -93,7 +127,7 @@ This gradual transformation is then animated on screen, with every point being n
 
     <div id="codeContainer">
 
-        <p id="gitHub"> Github </p>
+        <button id="gitHub"> Github </button >
 
         <div id="codeBase">
 
@@ -121,6 +155,7 @@ This gradual transformation is then animated on screen, with every point being n
 
     <script src="square.js" type="module"></script>
     <script src="main.js" type="module"></script>
+    <script src="code.js" type="module"></script>
    
     </body>
 
@@ -128,6 +163,9 @@ This gradual transformation is then animated on screen, with every point being n
 `;
 
 export const css = `
+        html{
+            font-size: 10vmin;
+        }        
         body {
             margin: 0;
             padding: 0;
@@ -193,7 +231,6 @@ export const css = `
             overflow:hidden;
             z-index:101;
             box-shadow: 0px 0px 1px 1px #abdf901a;
-            font-size: 25vw;
             cursor:default;
         }
         #file1:hover{
@@ -215,7 +252,6 @@ export const css = `
             z-index: 101;
             box-shadow: 0px 0px 1px 1px #abdf901a;
             cursor:default;
-            font-size: 25vw;
         }
         #file2:hover{
             cursor:pointer;
@@ -238,12 +274,12 @@ export const css = `
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size:25px;
             margin:0;
             padding:0;
             width:100%;
             text-align:center;
             color:white;
+            font-size: 0.5rem;
         }
         #wordsInside2{
             pointer-events:none;
@@ -252,12 +288,12 @@ export const css = `
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size:25px;
             margin:0;
             padding:0;
             width:100%;
             text-align:center;
             color:white;
+            font-size: 0.5rem;
         }
 
         @keyframes pulsify{
@@ -304,6 +340,7 @@ export const css = `
             width:100%;
             z-index: 9999;
             margin: 0;
+            font-size: 5rem;
 
         }
         #cancel2{
@@ -317,23 +354,20 @@ export const css = `
             width:100%;
             z-index:9999;
             margin:0;
-
+            font-size: 5rem;
 
         }
 
         .cancelButtonInactive{
-            font-size: 1em;
             opacity: 0;
             pointer-events:none;
         }
         .cancelButtonActive{
-            font-size: 1em;
             pointer-events: auto;
             opacity: 0;
             transition: 1s;
         }
         .cancelButtonActive:hover{
-            font-size: 1em;
             opacity:1;
             transition:1s;
         }
@@ -353,6 +387,7 @@ export const css = `
             border: solid;
             border-color:white;
             border-width: 0px 1px 0px 1px;
+            font-size: 0.3rem;
         }
 
          #downloadButton{
@@ -369,6 +404,7 @@ export const css = `
             border: solid;
             border-color:white;
             border-width: 0px 1px 0px 1px;
+            font-size: 0.3rem;
         }
 
         #openFileDropper{
@@ -386,6 +422,7 @@ export const css = `
             border: solid;
             border-color:white;
             border-width: 0px 1px 0px 1px;
+            font-size: 0.3rem;
         }
 
         #runAnimation{
@@ -403,6 +440,7 @@ export const css = `
             border-color:white;
             border-width: 0px 1px 0px 1px;
             padding: 0;
+            font-size: 0.3rem;
         }
 
         #restart{
@@ -420,6 +458,7 @@ export const css = `
             border: solid;
             border-color:white;
             border-width: 0px 1px 0px 1px;
+            font-size: 0.3rem;
         }
 
         #controlPanel{
@@ -439,14 +478,16 @@ export const css = `
         #controlPanelTitle{
             position: absolute;
             left:50%;
-            top: -20%;
+            top: -15%;
             transform:translate(-50%, -50%);
             height: 25%;
             width:25%;
             background-color: #333333;
             border-radius: 15px 15px 0px 0px;
             color:white;
+            padding:0;
             text-align: center;
+            font-size: 0.2rem;
 
         }
 
@@ -575,9 +616,9 @@ export const css = `
 
             transform:translate(-50%, -50%);
             background-color: green;
+            padding: 0;
 
-            
-            font-size: 1em;
+            font-size: 0.17rem;
 
 
         }
@@ -598,96 +639,85 @@ export const css = `
             height: 100%;
             width: 100%;
             position: fixed;
-            font-size: 5vw;
             transition: 1s;
             margin: 0;
             padding: 0;
         }
 
         #welcomeTitle{
-            left: 28%;
-            top: 45%;
-            width: 20%;
+            left: 50%;
+            transform: translate(-50%);
+            top: 40%;
+            width: 100%;
             height: 10%;
             text-align: center;
             padding: 0;
             margin: 0;
-            font-size: 1em;
             position: absolute;
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size:1rem;
         }
 
-        #textInput{
-            left: 50%;
-            top: 50%;                 /* changed from top:0 — align vertically with welcomeTitle */
-            transform: translateY(-50%); /* centers this block on that 45% line, same reference point as welcomeTitle */
-            width: 20%;
-            height: 10%;               /* changed from 100% — matches welcomeTitle's height instead of filling the whole screen */
-            text-align: left;
-            margin: 0;
-            padding: 0;
-            font-size: 1em;
+        #placeHolderText{
             position: absolute;
-            color: white;
         }
 
         #name{
             position: absolute;
-            top: 0;                    /* now relative to #textInput, which is already vertically aligned */
-            left: 0%;
-            width: 100%;                /* changed from 150% — stay within #textInput's own box, no overflow */
-            height: 100%;                /* changed from 10% — fill #textInput's height exactly */
-            border:none;
-            border-bottom: 2px solid white;
+            width: 30%;               
+            height: 10%;  
+            text-align:center;
+            border: 2px solid white;
             border-radius: 15px;
-            background: none;
-            font-size: 0.6em;            /* relative to #startingScreen's 5vw, scales consistently with welcomeTitle */
+            text-align: left;
+            margin: 0;
+            padding: 2px;
+            background: none;       /* relative to #startingScreen's 5vw, scales consistently with welcomeTitle */
             color: white;
             z-index: 300;
             transition: 1s;
+            font-size: 1rem;
+            left: 50%;
+            transform:translateX(-50%);
+            top: 45%;
+
+        }
+        #placeHolderText{
+            position:absolute;
+            width: 30%;
+            height: 10%;
+            top: 45%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: white;
+            opacity: 0.5;
+            text-align: left;
+            border:none;
+            padding: 0;
+            margin: 0;
+            z-index: 200;
+            transition: 1s;
+            background-color:#D8D1C8;
+            display: flex;
+            align-items: center;
+            pointer-events:none;
         }
 
         #text2 {
             position: fixed;
             left: 93%;
             top: 2%;
-            font-size: 0.75vw;
             color: red;
             height: 5%;
             width: 10%;
+            font-size: 0.1rem;
         }
 
         #name:focus{
             outline: none;
             border: 2px solid white;
             transition: 1s;
-        }
-
-        #placeHolderText{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 60%;
-            height: 100%;                /* matches #name's height now, instead of a separate 10% */
-            display: flex;
-            align-items: center;
-            justify-content: left;
-            text-align: center;
-            background: #D8D1C8;
-            color: white;
-            opacity: 0.5;
-            z-index: 200;
-            transition: 1s;
-            padding: 2px;
-            pointer-events: none;
-            font-size: 1em; /* matches #name, consistent scaling */
-        }
-
-        .nameInput{
-            transform: translate(5%, -75%);
         }
 
         #choices{
@@ -699,7 +729,6 @@ export const css = `
             width: 75%;
             background-color: #333333;
             border-radius: 35px;
-            font-size: 2em;
             transition: 1s;
         }
 
@@ -713,7 +742,7 @@ export const css = `
             border-radius: 35px;
             border: none;
             background-color: #D8D1C8;
-            font-size: 1em;
+            font-size: 0.5rem;
 
         }
 
@@ -727,7 +756,7 @@ export const css = `
             border-radius: 35px;
             border:none;
             background-color:#D8D1C8;
-            font-size: 1em;
+            font-size: 0.5rem;
             
         }
 
@@ -742,7 +771,7 @@ export const css = `
             border-radius: 35px;
             border: none;
             background-color: #D8D1C8;
-            font-size: 1em;
+            font-size: 0.5rem;
 
         }
 
@@ -759,6 +788,7 @@ export const css = `
             border-radius: 35px;
             z-index: 500;
             transition: 1s;
+            font-size: 0.25rem;
         }
 
         /* This is the move animation */
@@ -780,7 +810,6 @@ export const css = `
             padding: 0;
             border:none;
             background: none;
-            font-size: 20vh;
             transition: 1s;
         }
         #justabackground{
@@ -801,13 +830,6 @@ export const css = `
             transition: 1s;
         }
 
-        #text{
-            color: #333333;
-            font-size: 0.2em;
-            padding: 5%;
-        
-        }
-
         button:hover{
             cursor: pointer;
         }
@@ -822,13 +844,11 @@ export const css = `
             left:0%;
             width: 100%;
             height: 85%;
-            font-size: 5vw;
             transition: 1s;
         }
 
         #gitHub{
             position:absolute;
-            font-size: 0.4em;
             left: 15%;
             top: 5%;
             height: 5%;
@@ -839,7 +859,9 @@ export const css = `
             background-color: #333333;
             text-align: center;
             margin: 0;
+            padding: 0;
             border:none;
+            font-size: 0.2rem;
 
         }
 
@@ -864,8 +886,8 @@ export const css = `
             background: none;
             border-color: white;
             border-width: 0 1px 0px 0px;
-            font-size: 0.25em;
             transition: 1s;
+            font-size: 0.2rem;
         }
 
         #css{
@@ -879,8 +901,8 @@ export const css = `
             background: none;
             border-color: white;
             border-width: 0 1px 0px 1px;
-            font-size: 0.25em;
             transition: 1s;
+            font-size: 0.2rem;
         }
         #js1{
             position: absolute;
@@ -893,8 +915,8 @@ export const css = `
             background: none;
             border-color: white;
             border-width: 0px 1px 0px 1px;
-            font-size: 0.25em;
             transition: 1s;
+            font-size: 0.2rem;
         }
         #js2{
             position: absolute;
@@ -908,8 +930,8 @@ export const css = `
             border-width: 0px 0px 0px 1px;
             border-color: white;
             color: white;
-            font-size: 0.25em;
             transition: 1s;
+            font-size: 0.2rem;
         }
 
         #transitioner{
@@ -956,16 +978,99 @@ export const css = `
             padding: 10px;
             box-sizing: border-box;
             transition:1s;
-            font-size: 0.2em;
+            font-size: 0.2rem;
         }
 
+        #textTitle{
+           position: absolute;
+           margin: 0;
+           padding: 0;
+           width: 100%;
+           height: 20%;
+           top: 0%;
+           left: 0%;
+           font-size: 1.5rem; 
+           text-align: center;
+        }
 
+        #actualText1{
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            width: 35%;
+            height: 100%;
+            top: 35%;
+            left: 7.5%;
+            text-align: left;
+            font-size: 0.4rem;
+        }
+        #actualText2{
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            width: 35%;
+            height: 100%;
+            top: 135%;
+            left: 57.5%;
+            text-align: left;
+            font-size: 0.4rem;
+        }
 
+        #actualText3{
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            width: 35%;
+            height: 100%;
+            top: 235%;
+            left: 7.5%;
+            text-align: left;
+            font-size: 0.4rem;
+        }
+
+        #image1{
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            width: 35%;
+            height: 60%;
+            top: 55%;
+            left: 57.5%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        #image2{
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            width: 35%;
+            height: 60%;
+            top: 155%;
+            left: 7.5%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        #image3{
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            width: 35%;
+            height: 60%;
+            top: 255%;
+            left: 57.5%;
+            background-size: cover;
+            background-position: center;
+        }
 `;
 
 export const js1 = `
 // program to change an image to look like anothher image
 
+
+// all elements
+// end of all elements
 
 
 // start of actual alorithm
@@ -1044,19 +1149,22 @@ function runImage(){
         const viewPortHeight = window.innerHeight * 0.40;
         const viewPortWidth = window.innerWidth * 0.40;
 
-        const ratio = referenceCanvas.width / referenceCanvas.height;
+        const viewPortRatio = viewPortWidth / viewPortHeight;
+
+        const ratio = referenceImage.width / referenceImage.height;
+
+
+
 
         referenceCanvas.width = viewPortWidth;
-        referenceCanvas.height = viewPortHeight;
+        referenceCanvas.height = viewPortWidth / ratio;
 
-        if (referenceCanvas.width > viewPortWidth){
-            referenceCanvas.width = viewPortWidth;
-            referenceCanvas.height = referenceCanvas.width / ratio;
-        }
         if (referenceCanvas.height > viewPortHeight){
             referenceCanvas.height = viewPortHeight;
-            referenceCanvas.width = referenceCanvas.height * ratio;
+            referenceCanvas.width = viewPortHeight * ratio;
         }
+
+        console.log(referenceCanvas.height, referenceCanvas.width);
 
         ctxReference.drawImage(referenceImage, 0, 0, referenceCanvas.width, referenceCanvas.height);
 
@@ -1232,7 +1340,7 @@ function setupDropzone(element, preview, wordsInside, cancel, hidden) {
 
         if (!file) return;
 
-        if (file.type.startsWith('image/')) {
+        if (file.type.startsWith('image/') && file.name.toLowerCase().endsWith('.heic') && file.name.toLowerCase().endsWith('.heif')) {
             const reader = new FileReader();
 
             reader.onload = (event) => {
@@ -1250,7 +1358,7 @@ function setupDropzone(element, preview, wordsInside, cancel, hidden) {
 
             reader.readAsDataURL(file);
         } else {
-            console.log('Not an image file:', file.type);
+            hidden.value = '';
         }
     });
 }
@@ -1264,7 +1372,11 @@ function setupForClick(clickableElement, hiddenInput, preview, wordsInside, canc
 
     hiddenInput.addEventListener('change', () => {
         const file = hiddenInput.files[0];
-        if (!file || !file.type.startsWith('image/')) return;
+        if (!file || !file.type.startsWith('image/') || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')) {
+            hiddenInput.value = '';
+            alert('please enter a image file that is not a heic or heif');
+            return; 
+        }
 
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -1373,6 +1485,29 @@ cancellation1.addEventListener('click', () => {
 cancellation2.addEventListener('click', () => {
     removeToOrginalInputState(cancellation2, file2, wordsInside2, backgroundElement, backgroundURL, preview2, imageInput2);
 });
+
+// pulse for mouse over file 1 and file 2 dropper
+file1.addEventListener('mouseover', () =>{
+    mouseOverMethod(file1);
+});
+file1.addEventListener('mouseleave', () => {
+    mouseRemovePulse(file1);
+});
+file2.addEventListener('mouseover', () =>{
+    mouseOverMethod(file2);
+});
+file2.addEventListener('mouseleave', () => {
+    mouseRemovePulse(file2);
+});
+
+function mouseOverMethod(element){
+    element.classList.add('pulse');
+}
+function mouseRemovePulse(element){
+    element.classList.remove('pulse');
+}
+
+// end of above comment
 
 
 
@@ -1520,29 +1655,39 @@ choices.classList.add('move');
 name.addEventListener('focus', changeInputTitleText);
 name.addEventListener('blur', nameChange);
 
-function nameChange(){
-
-    placeHolderText.classList.remove('nameInput');
-    placeHolderText.style.zIndex = '200';
-    placeHolderText.style.fontSize = '1em';
-    placeHolderText.style.height = '100%';
-    placeHolderText.style.width = '60%';
-    placeHolderText.style.opacity = "0.5";
-
-}
-
 function changeInputTitleText(){
-
-    placeHolderText.classList.add('nameInput');
     placeHolderText.style.zIndex = '400';
-    placeHolderText.style.fontSize = '0.5em';
-    placeHolderText.style.height = '5%';
-    placeHolderText.style.width = '30%';
+    placeHolderText.style.fontSize = '0.4rem';
+    placeHolderText.style.height = '10%';
+    placeHolderText.style.width = '5%';
     placeHolderText.style.opacity = "1";
-    console.log('hi');
-
+    placeHolderText.style.top = '37%';
+    placeHolderText.style.textAlign = 'center';
+    placeHolderText.style.left = '37.5%';
+    placeHolderText.style.color = '#333333';
+    name.style.borderColor = '#333333';
+    placeHolderText.style.alignItems = 'flex-end';
 }
 
+function nameChange(){
+    if(name.value == ''){
+        placeHolderText.style.zIndex = '200';
+        placeHolderText.style.height = '10%';
+        placeHolderText.style.width = '30%';
+        placeHolderText.style.opacity = "0.5";
+        placeHolderText.style.textAlign = 'left';
+        // reset back to original centered position
+        placeHolderText.style.top = '45%';
+        placeHolderText.style.left = '50%';
+        placeHolderText.style.color = 'white';
+        name.style.borderColor = 'white';
+        placeHolderText.style.alignItems = 'center';
+        
+        placeHolderText.style.fontSize = '1rem';
+    }
+}
+
+welcomeTitle.style.display = 'none';
 
 function handleEnterKey(e){
     if(e.key === 'Enter'){
@@ -1552,8 +1697,8 @@ function handleEnterKey(e){
         nextPaint(() => {
             startingScreen.classList.add('moveTitleScreen');
             choices.classList.remove('move');
+            welcomeTitle.style.display = 'inline-block';
             welcomeTitle.innerHTML = 'Welcome, ' + name.value;
-            welcomeTitle.style.left = '15%';
             welcomeTitle.style.width = '70%';
             name.style.display = 'none';
             placeHolderText.style.display = 'none';
@@ -1738,7 +1883,7 @@ htmlCode.addEventListener('click', () => {
 
 cssCode.addEventListener('click', () => {
 
-    transitioner.style.transform = 'translateX(165%)';
+    transitioner.style.transform = 'translateX(166.67%)';
      htmlCode.style.color = 'white';
     cssCode.style.color = '#00ffff';
     js1Code.style.color = 'white';
@@ -1748,7 +1893,7 @@ cssCode.addEventListener('click', () => {
 
 js1Code.addEventListener('click', () => {
 
-    transitioner.style.transform = 'translateX(330%)';
+    transitioner.style.transform = 'translateX(333.33%)';
      htmlCode.style.color = 'white';
     cssCode.style.color = 'white';
     js1Code.style.color = '#00ffff';
@@ -1759,7 +1904,7 @@ js1Code.addEventListener('click', () => {
 
 js2Code.addEventListener('click', () => {
 
-    transitioner.style.transform = 'translateX(495%)';
+    transitioner.style.transform = 'translateX(500%)';
     htmlCode.style.color = 'white';
     cssCode.style.color = 'white';
     js1Code.style.color = 'white';
@@ -1767,6 +1912,8 @@ js2Code.addEventListener('click', () => {
     actualCode.textContent = js2;
     
 });
+
+
 `;
 
 export const js2 = `

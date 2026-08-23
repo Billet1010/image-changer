@@ -359,7 +359,6 @@ function previewImages(element, arr1, arr2, preview, wordsInside){
             preview.style.backgroundImage = `url(${arr1[i]})`;
             preview.classList.add('showImage');
             wordsInside.innerHTML = 'PREVIEW';
-            
         }
         if (element == file1){
             referenceImageFile = arr1[i];
