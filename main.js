@@ -272,7 +272,7 @@ function setupDropzone(element, preview, wordsInside, cancel, hidden) {
 
         if (!file) return;
 
-        if (file.type.startsWith('image/') && file.name.toLowerCase().endsWith('.heic') && file.name.toLowerCase().endsWith('.heif')) {
+        if (file.type.startsWith('image/') && !file.name.toLowerCase().endsWith('.heic') && !file.name.toLowerCase().endsWith('.heif')) {
             const reader = new FileReader();
 
             reader.onload = (event) => {
@@ -281,6 +281,7 @@ function setupDropzone(element, preview, wordsInside, cancel, hidden) {
                     previewImages(element, backgroundURL, backgroundElement, preview, wordsInside);
                     cancel.classList.remove('cancelButtonInactive');
                     cancel.classList.add('cancelButtonActive');
+                    console.log('where is it');
                 
             };
 
